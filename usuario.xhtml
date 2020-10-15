@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/plantilla.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <b:form horizontal="true" id="insertarUsuario" class="form">
+             <h:panelGroup layout="block" 
+                          rendered="#{not empty facesContext.messageList}">
+                <h:messages />
+            </h:panelGroup>
+            <b:panelGrid columns="1">
+                <h:outputLabel for="correo" value="correo"/>
+                <h:inputText id="mensaje" styleClass="form-control"
+                             value="#{usuarioBean.usuario.correoElectonico}"
+                             required="true"
+                             requiredMessage="Debes ingresar el telefono"
+                             validatorMessage="Nombre Invalido">
+                    <f:ajax event="blur" listener="#{usuarioBean.obtenerNombre(usuariosBean.usuario.correoElectonico)}" render="@form" />
+                </h:inputText>     
+                <h:outputLabel for="contraseña" value="contraseña"/>
+                <b:inputSecret id="contraseña" styleClass="form-control"
+                             value="#{usuarioBean.usuario.contraseña}"
+                             required="true"
+                             requiredMessage="Debes ingresar el telefono"
+                             validatorMessage="Nombre Invalido">
+                </b:inputSecret>                 
+                <h:outputLabel for="nombre" value="Nombre:"/>
+                <h:inputText id="nombre" styleClass="form-control"
+                             value="#{usuarioBean.usuario.nombre}"
+                             required="true"
+                             requiredMessage="Debes ingresar el nombre"
+                             validatorMessage="Nombre Invalido">
+                </h:inputText>                
+                <h:outputLabel for="apellido" value="Apellido:"/>
+                <h:inputText id="apellido" styleClass="form-control"
+                             value="#{usuarioBean.usuario.apellido}"
+                             required="true"
+                             requiredMessage="Debes ingresar el apellido"
+                             validatorMessage="Nombre Invalido">
+                </h:inputText>   
+                <h:outputLabel for="telefono" value="Telefono"/>
+                <h:inputText id="telefono" styleClass="form-control"
+                             value="#{usuarioBean.usuario.telefono}"
+                             required="true"
+                             requiredMessage="Debes ingresar el telefono"
+                             validatorMessage="Nombre Invalido">
+                </h:inputText> 
+                <h:outputLabel for="direccion" value="direccion"/>
+                <h:inputText id="direccion" styleClass="form-control"
+                             value="#{usuarioBean.usuario.direccion}"
+                             required="true"
+                             requiredMessage="Debes ingresar el telefono"
+                             validatorMessage="Nombre Invalido">
+                </h:inputText> 
+                
+            </b:panelGrid>
+            <h:commandButton value="Guardar" styleClass="btn btn-success"
+                             action="#{usuarioBean.validarDatos()}" style="margin-right:
+                             10px"/>  
+
+        </b:form>
+    </ui:define>
+
+</ui:composition>
