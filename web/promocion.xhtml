@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/plantillaAdmin.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <b:panelGrid columns="2">
+            <b:form horizontal="true" class="form">
+                <b:panelGrid columns="1">
+                <b:inputText label="Codigo de Categoria:" placeholder="Codigo de la promocion" 
+                             value="#{promocionesBean.promocion.codPromocion}" id="cod" readonly="yes" disabled="true">
+                </b:inputText>
+                <h:outputLabel  value="Seleccione producto" /> 
+                <b:selectOneMenu id="categoria" value="#{promocionesBean.producto.codProducto}">
+                    <f:selectItems value="#{promocionesBean.listaProduc}" var="p" itemValue="#{p.codProducto}" itemLabel="#{p.nombreProduct}"/>
+             </b:selectOneMenu>
+                
+                 <h:outputLabel  value="Fecha inicio de la promocion: " />
+                <p:calendar id="fechainicio" value="#{promocionesBean.promocion.fechaInicio}"
+                            required="true" requiredMessage="Fecha requerida" /> 
+                <br/>
+                <h:outputLabel  value="Fecha fin de la promocion: " />
+                <p:calendar id="fechafin" value="#{promocionesBean.promocion.fechaFinal}"
+                            required="true" requiredMessage="Fecha requerida" /> 
+                <br/>
+                <h:outputLabel  value="Precio de promocion: " />
+                <p:spinner id="step" value="#{promocionesBean.promocion.precioPromocion}" stepFactor="0.01" prefix="$"/> 
+                <br/>
+                <b:commandButton look="success" value="Guardar" action="#{promocionesBean.guardarPromocion(promocionesBean.promocion.codPromocion)}"></b:commandButton> 
+                <b:messages />
+                </b:panelGrid>
+            </b:form>
+
+            <h:form >
+                <h:dataTable styleClass="table" value="#{promocionesBean.listaPromocion}" var="promo" rendered="#{promocionesBean.listaPromocion.size()>0}">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputLabel value="Codigo de Promocion"/>
+                        </f:facet>
+                        <h:outputText value="#{promo.codPromocion}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputLabel value="Producto"/>
+                        </f:facet>
+                        <h:outputText value="#{promo.codProducto.nombreProduct}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputLabel value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{promo.fechaInicio}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputLabel value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{promo.fechaInicio}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputLabel value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{promo.precioPromocion}"/>
+                    </h:column>                   
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputLabel value="Operaciones"/>
+                        </f:facet>
+                        <h:commandButton value="Eliminar" styleClass="btn btn-danger" action="#{promocionesBean.eliminarPromocion(promo.codPromocion)}"
+                        onclick="return confirmarEliminacion();">                            
+                        </h:commandButton>
+                        <h:commandButton value="Modificar" styleClass="btn btn-action" action="#{promocionesBean.obtenerdatos(promo.codPromocion)}">
+                        </h:commandButton>                            
+                    </h:column>
+
+                </h:dataTable>
+            </h:form>
+    <h:outputScript>
+        function confirmarEliminacion(){
+            return confirm("¿Está seguro que desea eliminar este estudiante");
+        }
+    </h:outputScript>
+        </b:panelGrid>  
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/plantilla.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <b:alert severity="success">¡Registrado! Para poder ingresar con su cuenta primero debe de ingresar el token 
+            que enviamos a su correo.</b:alert>
+        <b:form horizontal="true" class="form">
+            <b:panelGrid columns="1">
+                <h:outputLabel for="correo" value="correo"/>
+                <h:inputText id="correo" styleClass="form-control"
+                             value="#{usuarioBean.usuario.correoElectonico}"
+                             required="true"
+                             requiredMessage="Debes ingresar el telefono"
+                             validatorMessage="Nombre Invalido"> 
+                </h:inputText> 
+                <h:outputLabel for="token" value="token"/>
+                <h:inputText id="token" styleClass="form-control"
+                             value="#{usuarioBean.tok}"
+                             required="true"
+                             requiredMessage="Debes ingresar el telefono"
+                             validatorMessage="Nombre Invalido">
+                </h:inputText>                 
+            </b:panelGrid>
+            <b:panelGrid columns="3">
+                <h:commandButton value="Validar" styleClass="btn btn-success"
+                                 action="#{usuarioBean.validarToken(usuarioBean.tok)}" style="margin-right:
+                                 10px"/>  
+            </b:panelGrid>
+        </b:form>
+        <h:messages errorStyle="color:red" infoStyle="color:green"></h:messages>
+    </ui:define>
+
+</ui:composition>

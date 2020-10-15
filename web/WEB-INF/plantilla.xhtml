@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+       
+        <title>Librería Yahveh</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="menu">
+                <b:navBar brand="Libreria Yavet" brandHref="#" fluid="true" inverse="true" id="menu" brandStyle="color:#fff; font-family: 'Lobster';font-size: 40px;font-weight: bold;">
+                    <b:navbarLinks>
+                        <b:navLink value="Inicio" href="index.xhtml"  class="hola" style="color: #fff;"></b:navLink>
+                      <b:navLink value="Productos Escolares" href="Productos_Escolates.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                      <b:navLink value="Productos de Papeleria" href="Productos_Papeleria.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                      <b:navLink value="Promociones" href="Promociones.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                      <b:navLink value="Iniciar Session" href="login.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                    </b:navbarLinks>
+                </b:navBar>
+            </ui:insert>
+        </div>
+        
+        <div class="contenido">
+            
+            <ui:insert name="content">
+                
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

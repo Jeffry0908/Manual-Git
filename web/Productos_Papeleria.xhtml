@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/plantilla.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <ui:define name="content">
+        
+      <b:form>
+            <b:carousel id="tiovivo" style="width:100%" interval="2500">
+              <b:carouselItem >
+                <img src="../resources/img/papeleria1.jpg" alt="Valladolid" style="width: 100%; height: 300px" />
+                <b:carouselCaption>
+                  <h2 style="color:#000000">¡Productos De Papeleria!</h2>
+                  <p><a style="color:#000000" href="http://www.vanderkrogt.net/statues/object.php?webpage=CO&record;=escl010"></a></p>
+                </b:carouselCaption>
+              </b:carouselItem>
+              <b:carouselItem>
+                  <b:carouselCaption>
+                  <h3 style="color:#000000">¡Compra Lo que necesites!</h3>
+                  <p><a style="color:#000000" href="http://www.vanderkrogt.net/statues/object.php?webpage=CO&record;=escl010"></a></p>
+                </b:carouselCaption>
+                  
+                <img src="../resources/img/papeleria2.jpg" alt="Valladolid" style="width: 100%; height: 300px" />
+              </b:carouselItem>
+
+        
+            </b:carousel>
+        </b:form>
+        
+        
+        <b:column col-sm="6" col-md="4">
+    <b:thumbnail>
+      <img src="../resources/img/crepe.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
+      <f:facet name="caption">
+        <h3>Papel Crespon</h3>
+        <p>Precio del producto por unidad: $0.35 </p>
+        <p>
+        <b:button look="primary" value="Comprar Producto"/>
+        </p>
+      </f:facet>
+      
+    </b:thumbnail>
+  </b:column>
+ 
+        <b:column col-sm="6" col-md="4">
+    <b:thumbnail>
+      <img src="../resources/img/color.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
+      <f:facet name="caption">
+        <h3>Paginas De Colores</h3>
+        <p>Precio del producto por unidad: $0.05</p>
+        <p>
+        <b:button look="primary" value="Comprar Producto"/>
+        </p>
+      </f:facet>
+      
+    </b:thumbnail>
+  </b:column>
+        
+        <b:column col-sm="6" col-md="4">
+    <b:thumbnail>
+      <img src="../resources/img/brillante.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
+      <f:facet name="caption">
+        <h3>Paginas Con Brillantina</h3>
+        <p>Precio del producto por unidad: $0.25</p>
+        <p>
+        <b:button look="primary" value="Comprar Producto"/>
+        </p>
+      </f:facet>
+      
+    </b:thumbnail>
+  </b:column>
+        
+        
+       <b:column col-sm="6" col-md="4">
+    <b:thumbnail>
+      <img src="../resources/img/fomi.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
+      <f:facet name="caption">
+        <h3>Foamy</h3>
+        <p>Precio del producto por unidad: $0.25</p>
+        <p>
+        <b:button look="primary" value="Comprar Producto"/>
+        </p>
+      </f:facet>
+      
+    </b:thumbnail>
+  </b:column>
+        
+        
+        <b:column col-sm="6" col-md="4">
+    <b:thumbnail>
+      <img src="../resources/img/pliego.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
+      <f:facet name="caption">
+        <h3>Pliego De Cartulina</h3>
+        <p>Precio del producto por unidad: $0.25</p>
+        <p>
+        <b:button look="primary" value="Comprar Producto"/>
+        </p>
+      </f:facet>
+      
+    </b:thumbnail>
+  </b:column>
+        
+        
+        <b:column col-sm="6" col-md="4">
+    <b:thumbnail>
+      <img src="../resources/img/paquete.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
+      <f:facet name="caption">
+        <h3>Paquete De Papel</h3>
+        <p>Precio del producto: $4.50</p>
+        <p>
+        <b:button look="primary" value="Comprar Producto"/>
+        </p>
+      </f:facet>
+      
+    </b:thumbnail>
+  </b:column>
+        
+        
+    </ui:define>
+    </ui:composition>

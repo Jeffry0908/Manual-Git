@@ -1,0 +1,39 @@
+#menu{
+    background-color: #263F6A;
+    height: 80px;
+    padding: 7px;  
+    line-height:0;
+}
+.hola a{
+   font-weight: bold;
+   font-size: 20px;
+   font-family: 'Arial';
+   color: #fff;
+}
+.hola *:hover{
+    color: #000;
+}
+.contenido{
+	width: 92%;
+	height: auto;
+        position: relative;
+        top: -20px;
+	margin: 0px auto;
+	background: #ECEFF1;
+	box-shadow: -2px -13px 59px 9px rgba(0,0,0,0.46);
+	font-family: 'Noto Serif', serif;	                                               
+}
+
+.form {
+	padding: 5px;
+	max-width: 500px;
+	background-color: #E0E0E0;
+	margin: 0 auto;
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+}
+.im{
+    width: 350px;
+    height: 350px;
+}

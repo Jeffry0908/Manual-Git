@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/plantillaAdmin.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <b:panelGrid columns="2">
+            <b:form horizontal="true" class="form">
+                       <b:inputText label="Codigo de Categoria:" placeholder="Codigo de la Categoria" 
+                                    value="#{categoriaBean.categoria.codCategoria}" id="cod" readonly="true">
+                       </b:inputText>
+                       <b:inputText label="Nombre de la categoria:" placeholder="Nombre de la Categoria" required="true" requiredMessage="Debe ingresar una categoria"
+                                    value="#{categoriaBean.categoria.nombreCategoria}" id="NombreCategoria">
+                           <f:ajax event="blur" listener="#{categoriaBean.obtenerNombre(categoriaBean.categoria.nombreCategoria)}" render="@form" />
+                       </b:inputText>
+                       <b:commandButton look="success" value="Guardar" action="#{categoriaBean.guardarCategoria(categoriaBean.categoria.codCategoria)}"></b:commandButton> 
+                       <b:messages />
+                   </b:form>
+
+       <h:form >
+           <h:dataTable styleClass="table" value="#{categoriaBean.listaCategoria}" var="est" rendered="#{categoriaBean.listaCategoria.size()>0}">
+                               <h:column>
+                                   <f:facet name="header">
+                                       <h:outputLabel value="Codigo"/>
+                                   </f:facet>
+                                   <h:outputText value="#{est.codCategoria}"/>
+                               </h:column>
+                               <h:column>
+                                   <f:facet name="header">
+                                       <h:outputLabel value="Nombre"/>
+                                   </f:facet>
+                                   <h:outputText value="#{est.nombreCategoria}"/>
+                               </h:column>
+                               <h:column>
+                                   <f:facet name="header">
+                                       <h:outputLabel value="Operaciones"/>
+                                   </f:facet>
+                                   <h:commandButton value="Eliminar" styleClass="btn btn-danger" action="#{categoriaBean.eliminarCategoria(est.codCategoria)}"
+                                   onclick="return confirmarEliminacion();">                            
+                                   </h:commandButton>
+                                   <h:commandButton value="Modificar" styleClass="btn btn-action" action="#{categoriaBean.obtenerdatos(est.codCategoria)}">
+                                   </h:commandButton>                            
+                               </h:column>
+
+                           </h:dataTable>
+                       </h:form>
+                                           <h:outputScript>
+                    function confirmarEliminacion(){
+                       return confirm("¿Está seguro que desea eliminar este estudiante");
+                   }
+               </h:outputScript>
+               </b:panelGrid>  
+    </ui:define>
+
+</ui:composition>

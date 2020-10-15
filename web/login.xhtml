@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/plantilla.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <br/>
+        <br/>
+        <b:form horizontal="true" class="form">
+            <b:panelGrid columns="1">
+                <b:inputText placeholder="Usuario" required="true" value="#{usuarioBean.usuario.correoElectonico}" label="Usuario:" colMd="10" labelColMd="2">
+                  <f:facet name="prepend">
+                    <b:icon name="user" />
+                  </f:facet>
+                </b:inputText>
+
+                <b:inputSecret placeholder="Contraseña" required="true" value="#{usuarioBean.usuario.contraseña}" label="Contraseña" colMd="10" labelColMd="2">
+                  <f:facet name="prepend">
+                    <b:iconAwesome name="key" />
+                  </f:facet>
+                </b:inputSecret>
+            </b:panelGrid>
+            <center><b:panelGrid columns="1">
+               <h:commandButton value="Iniciar Sesion" styleClass="btn btn-success"
+                                 action="#{usuarioBean.iniciar(usuarioBean.usuario.correoElectonico, usuarioBean.usuario.contraseña)}" style="margin-right:
+                                 10px"/>
+                <br/>
+                <b:alert severity="info"><strong>¿No tienes cuenta?</strong></b:alert>
+                <h:link value="Crear Cuenta" styleClass="btn btn-success" outcome="usuario.xhtml" />
+            </b:panelGrid></center>
+        </b:form>
+        <h:messages errorStyle="color:red" infoStyle="color:green"></h:messages>
+        <br></br>
+        <br></br>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:c="http://java.sun.com/jsp/jstl/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+<title>Compras</title>
+<h:outputStylesheet name="css/bootstrap.min.css" />
+<h:outputStylesheet name="css/alertify.core.css" />
+<h:outputStylesheet name="css/alertify.default.css" />
+<h:outputScript name="js/alertify.js"/>
+<h:outputStylesheet name="./css/default.css"/>  
+</h:head>
+    <h:body>
+        <div id="top">
+                <b:navBar brand="Libreria Yavet" brandHref="#" fluid="true" inverse="true" id="menu" brandStyle="color:#fff; font-family: 'Lobster';font-size: 40px;font-weight: bold;">
+                    <b:navbarLinks>
+                        <b:navLink value="Inicio" href="indexAdmin.xhtml"  class="hola" style="color: #fff;"></b:navLink>
+                      <b:navLink value="Producto" href="Productos.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                      <b:navLink value="Categoria" href="categoria.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                      <b:navLink value="Compra" href="Compras.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                      <b:navLink value="Promociones" href="promocion.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                      <b:navLink value="Cerrar Session" href="index.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                    </b:navbarLinks>
+                </b:navBar>
+        </div>         
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<h2>Compras</h2>
+<h:form id="miFormulario">
+<h:panelGroup layout="block" styleClass="alert alert-danger"
+rendered="#{not empty facesContext.messageList}">
+<h:messages />
+</h:panelGroup>
+<h:panelGrid columns="4" styleClass="table">
+<h:outputLabel for="codCompra" value="Codigo Compra:"/>
+<h:inputText id="codCompra" styleClass="form-control"
+value="#{compraBean.compra.codCompra}">
+</h:inputText>
+
+<h:outputLabel for="fechaCompra" value="Fecha Compra:"/>
+<p:calendar id="fechaCompra" value="#{compraBean.compra.fechaCompra}"
+required="true" requiredMessage="Fecha requerida" />
+<h:outputLabel for="monto" value="Monto:"/>
+<h:inputText id="monto" value="#{compraBean.compra.monto}"
+required="true" styleClass="form-control"
+requiredMessage="Debes ingresar el monto de la compra"
+converterMessage="El monto debe ser un dato numerico">
+</h:inputText>
+</h:panelGrid>
+    
+<h:commandButton value="Guardar" styleClass="btn btn-success"
+action="#{compraBean.guardarCompra()}" style="margin-right: 10px"/>
+
+<h:commandButton value="Actualizar" class="btn btn-secondary"
+action="#{compraBean.actualizarCompra()}" style="margin-right: 10px"/>
+
+
+<h:commandButton type="reset" value="Limpiar" styleClass="btn btn-danger"/>
+</h:form>
+</div>
+</div>
+<div class="row">
+<h:form >
+<h:dataTable styleClass="table" value="#{compraBean.listaCompras}" var="est" rendered="#{compraBean.listaCompras.size()>0}">
+<h:column>
+<f:facet name="header">
+<h:outputLabel value="Codigo_Compra"/>
+</f:facet>
+<h:outputText value="#{est.codCompra}"/>
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputLabel value="FechaCompra"/>
+</f:facet>
+<h:outputText value="#{est.fechaCompra}"/>
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputLabel value="Monto"/>
+</f:facet>
+<h:outputText value="#{est.monto}"/>
+</h:column>
+    
+     <h:column>
+<f:facet name="header">
+<h:outputLabel value="Operaciones"/>
+</f:facet>
+<h:commandButton value="Eliminar" styleClass="btn btn-danger"
+action="#{compraBean.eliminarCompra}"
+onclick="return confirmarEliminacion();">
+<f:param name="codigo" value="#{est.codCompra}"/>
+</h:commandButton>
+
+ 
+<h:commandButton value="Seleccionar" styleClass="btn btn-primary"
+action="#{compraBean.returnCompraCodigo}">
+<f:param name="codigoo" value="#{est.codCompra}"/>
+</h:commandButton>
+        
+        
+    </h:column>
+    
+</h:dataTable>
+</h:form>
+</div>
+</div>
+<h:outputScript>
+<c:if test = "#{not empty flash.exito}" >
+alertify.success('#{flash.exito}');
+</c:if>
+   function confirmarEliminacion(){
+return confirm("¿Está seguro que desea eliminar la compra");
+}
+    
+</h:outputScript>
+</h:body>
+</html>
