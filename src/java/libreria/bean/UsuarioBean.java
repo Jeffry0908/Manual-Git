@@ -27,23 +27,20 @@ import libreria.utils.Token;
 @ManagedBean
 @RequestScoped
 public class UsuarioBean {
-
     Token token = new Token();
     String tok;
-    CorreoModel correo = new CorreoModel();
+    CorreoModel correo=new CorreoModel();
     UsuarioModel modelo = new UsuarioModel();
     private UsuarioEntity usuario;
-    Codigo cod = new Codigo();
+    Codigo cod= new Codigo();
     private List<UsuarioEntity> listaCategoria;
-
     /**
      * Creates a new instance of UsuarioBean
      */
     public UsuarioBean() {
-        usuario = new UsuarioEntity();
+                usuario = new UsuarioEntity();
     }
-
-    public UsuarioModel getModelo() {
+   public UsuarioModel getModelo() {
         return modelo;
     }
 
@@ -60,7 +57,7 @@ public class UsuarioBean {
     }
 
     public List<UsuarioEntity> getListaCategoria() {
-        return modelo.listarUsuarios();
+       return modelo.listarUsuarios();
     }
 
     public void setListaCategoria(List<UsuarioEntity> listaCategoria) {
@@ -75,83 +72,79 @@ public class UsuarioBean {
         this.tok = tok;
     }
 
-    public String validarDatos() {
-        try {
+
+    public String validarDatos(){
+        try{
             int ExitsEmail = modelo.existeCorreo(usuario.getCorreoElectonico());
             System.out.println(ExitsEmail);
-            if (ExitsEmail == 1) {
+            if(ExitsEmail==1){
                 JsfUtil.mensajeError("¡Error! Correo Electronico ya resgistrado");
                 return null;
             }
-            int total = modelo.total();
+            int total= modelo.total();
             cod.generarcod(total, "USU");
-            String codigo = cod.serie();
+            String codigo= cod.serie();
             usuario.setCodUsuario(codigo);
-            TipousuarioEntity tipo = new TipousuarioEntity();
+            TipousuarioEntity tipo= new TipousuarioEntity();
             tipo.setCodTipoUsua(2);
             usuario.setCodTipoUsua(tipo);
             usuario.setEstado(Boolean.FALSE);
-            String toke = String.valueOf(token.generarToken());
+            String  toke=String.valueOf(token.generarToken());
             usuario.setToken(toke);
-            if (modelo.insertarUsuario(usuario) != 1) {
+            if(modelo.insertarUsuario(usuario)!=1){
                 JsfUtil.mensajeError("¡Error! Correo Electronico ya resgistrado");
                 return null;
-            } else {
+            }else{
                 JsfUtil.exitoMensaje("Usuario ingresado, hemos enviado un correo para validar su cuenta");
-                correo.enviarCorreo(usuario.getCorreoElectonico(), "Ya ha sido registrado", "Su token para validar su cuenta es:" + toke);
+                correo.enviarCorreo(usuario.getCorreoElectonico(), "Ya ha sido registrado", "Su token para validar su cuenta es:"+toke);
                 return "verificarCuenta";
             }
-        } catch (Exception e) {
+        }catch(Exception e){
             JsfUtil.mensajeError("¡Error! No pudo ser insertado");
-            return "";
+            return ""; 
         }
     }
-
-    public void obtenerNombre(String correo) {
-        if (modelo.existeCorreo(correo) > 0) {
+    
+    public void obtenerNombre(String correo){
+        if (modelo.existeCorreo(correo)>0) {
             JsfUtil.mensajeError("¡Error! Correo Electronico ya resgistrado");
         }
     }
-
-    public String validarToken(String token) {
-        System.out.println(token);
-        if (modelo.token(token) == 1) {
-            UsuarioEntity u = modelo.FindByToken(token);
-            u.setEstado(true);
-            if (modelo.modificarUsuario(u) == 1) {
-                JsfUtil.exitoMensaje("Usuario Validado");
-                return "login";
-            }
-        }
+    
+    public String validarToken(String token){
+         System.out.println(token);
+        if(modelo.token(token)==1){
+           UsuarioEntity u= modelo.FindByToken(token);
+           u.setEstado(true);
+           if(modelo.modificarUsuario(u)==1){
+            JsfUtil.exitoMensaje("Usuario Validado");
+             return "login";               
+           }
+    }
         return null;
     }
-
-    public String iniciar(String usuario, String contraseña) throws IOException {
-        if (modelo.IniciarSesionD(usuario, contraseña) == 1) {
-            UsuarioEntity us = modelo.IniciarSesion(usuario, contraseña);
-            if (us.getEstado() == true) {
-               FacesContext context = FacesContext.getCurrentInstance();
-               context.getExternalContext().getSessionMap().put("usuario", us.getNombre());
-                switch (us.getCodTipoUsua().getCodTipoUsua()) {
-                    case 1:
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("indexAdmin.xhtml");
-                        break;
-                    case 2:
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-                        break;
-                }
-            } else {
+    
+    public String iniciar(String usuario,String contraseña) throws IOException{
+        if(modelo.IniciarSesionD(usuario, contraseña)==1){
+            UsuarioEntity us=modelo.IniciarSesion(usuario, contraseña);
+            if(us.getEstado()==true){
+            switch(us.getCodTipoUsua().getCodTipoUsua()){
+                case 1:
+                     FacesContext.getCurrentInstance().getExternalContext().redirect("indexAdmin.xhtml");
+                    break;
+                case 2:
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+                    break;
+            }
+            }else{
                 JsfUtil.mensajeError("Su cuenta no esta validada");
                 return null;
             }
-        } else {
+        }else{
             JsfUtil.mensajeError("Usuario o contraseña no son correctos");
             return null;
-        }
+            }
         return null;
     }
-    public String logout(){
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "Producto?faces-redirect=true";
-    }
 }
+
