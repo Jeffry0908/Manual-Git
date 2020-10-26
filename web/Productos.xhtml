@@ -1,189 +1,191 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:h="http://xmlns.jcp.org/jsf/html"
-xmlns:f="http://xmlns.jcp.org/jsf/core"
-xmlns:c="http://java.sun.com/jsp/jstl/core"
-xmlns:b="http://bootsfaces.net/ui"
-xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head>
-<title>Productos</title>
-<h:outputStylesheet name="css/bootstrap.min.css" />
-<h:outputStylesheet name="css/alertify.core.css" />
-<h:outputStylesheet name="css/alertify.default.css" />
-<h:outputScript name="js/alertify.js"/>
-<h:outputStylesheet name="./css/default.css"/>
-</h:head>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Productos</title>
+        <h:outputStylesheet name="css/bootstrap.min.css" />
+        <h:outputStylesheet name="css/alertify.core.css" />
+        <h:outputStylesheet name="css/alertify.default.css" />
+        <h:outputScript name="js/alertify.js"/>
+        <h:outputStylesheet name="./css/default.css"/>
+    </h:head>
     <h:body>
         <div id="top">
-                <b:navBar brand="Libreria Yavet" brandHref="#" fluid="true" inverse="true" id="menu" brandStyle="color:#fff; font-family: 'Lobster';font-size: 40px;font-weight: bold;">
-                    <b:navbarLinks>
-                        <b:navLink value="Inicio" href="indexAdmin.xhtml"  class="hola" style="color: #fff;"></b:navLink>
-                      <b:navLink value="Producto" href="Productos.xhtml" class="hola" style="color: #fff;"></b:navLink>
-                      <b:navLink value="Categoria" href="categoria.xhtml" class="hola" style="color: #fff;"></b:navLink>
-                      <b:navLink value="Compra" href="Compras.xhtml" class="hola" style="color: #fff;"></b:navLink>
-                      <b:navLink value="Promociones" href="promocion.xhtml" class="hola" style="color: #fff;"></b:navLink>
-                      <b:navLink value="Cerrar Session" href="index.xhtml" class="hola" style="color: #fff;"></b:navLink>
-                    </b:navbarLinks>
-                </b:navBar>
+            <b:navBar brand="Libreria Yavet" brandHref="#" fluid="true" inverse="true" id="menu" brandStyle="color:#fff; font-family: 'Lobster';font-size: 40px;font-weight: bold;">
+                <b:navbarLinks>
+                    <b:navLink value="Inicio" href="indexAdmin.xhtml"  class="hola" style="color: #fff;"></b:navLink>
+                    <b:navLink value="Producto" href="Productos.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                    <b:navLink value="Categoria" href="categoria.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                    <b:navLink value="Compra" href="Compras.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                    <b:navLink value="Promociones" href="promocion.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                    <b:navLink value="Cerrar Session" href="index.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                </b:navbarLinks>
+            </b:navBar>
         </div>        
-<div class="container">
-<div class="row">
-<div class="col-md-12">
-<h2>Productos</h2>
-<h:form id="miFormulario">
-<h:panelGroup layout="block" styleClass="alert alert-danger"
-rendered="#{not empty facesContext.messageList}">
-<h:messages />
-</h:panelGroup>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Productos</h2>
+                    <h:form id="miFormulario">
+                        <h:panelGroup layout="block" styleClass="alert alert-danger"
+                                      rendered="#{not empty facesContext.messageList}">
+                            <h:messages />
+                        </h:panelGroup>
 
-<h:outputLabel for="codProducto" value="Codigo de Producto"/>
-<h:inputText id="codProducto" styleClass="form-control"
-value="#{productoBean.producto.codProducto}" readonly="true">
-</h:inputText>
-<h:outputLabel for="nombre" value="Nombre Producto:"/>
-<h:inputText id="nombre" styleClass="form-control"
-value="#{productoBean.producto.nombreProduct}"
-required="true"
-requiredMessage="Debes ingresar el nombre">
-<f:ajax event="blur" listener="#{productoBean.obtenerNombre(productoBean.producto.nombreProduct)}" render="@form" />
-</h:inputText>
-
-
-<h:outputLabel for="precioCompra" value="precio Compra:"/>
-<h:inputText id="precioCompra" value="#{productoBean.producto.precioCompra}"
-required="true" styleClass="form-control"
-requiredMessage="Debe ingresar el precio de comprar"
-converterMessage="El precio debe ser numerico">
-
-</h:inputText>
-
-<h:outputLabel for="ganancia" value="Ganancia"/>
-<h:inputText id="ganancia" value="#{productoBean.producto.ganancia}"
-required="true" styleClass="form-control"
-requiredMessage="Debes ingresar la ganancia que obtendra"
-converterMessage="El precio debe ser numerico">
-</h:inputText>
+                        <h:outputLabel for="codProducto" value="Codigo de Producto"/>
+                        <h:inputText id="codProducto" styleClass="form-control"
+                                     value="#{productoBean.producto.codProducto}" readonly="true">
+                        </h:inputText>
+                        <h:inputHidden value="#{productoBean.producto.codProducto}">
+                        </h:inputHidden>
+                        <h:outputLabel for="nombre" value="Nombre Producto:"/>
+                        <h:inputText id="nombre" styleClass="form-control"
+                                     value="#{productoBean.producto.nombreProduct}"
+                                     required="true"
+                                     requiredMessage="Debes ingresar el nombre">
+                            <f:ajax event="blur" listener="#{productoBean.obtenerNombre(productoBean.producto.nombreProduct)}" render="@form" />
+                        </h:inputText>
 
 
-<h:outputLabel for="precioVenta" value="precio Venta:"/>
-<h:inputText id="precioVenta" value="#{productoBean.producto.precioVenta}"
-required="true" styleClass="form-control"
-requiredMessage="Debes ingresar el precio de venta"
-converterMessage="El precio de venta debe ser numerico">
-</h:inputText>
+                        <h:outputLabel for="precioCompra" value="precio Compra:"/>
+                        <h:inputText id="precioCompra" value="#{productoBean.producto.precioCompra}"
+                                     required="true" styleClass="form-control"
+                                     requiredMessage="Debe ingresar el precio de comprar"
+                                     converterMessage="El precio debe ser numerico">
+
+                        </h:inputText>
+
+                        <h:outputLabel for="ganancia" value="Ganancia"/>
+                        <h:inputText id="ganancia" value="#{productoBean.producto.ganancia}"
+                                     required="true" styleClass="form-control"
+                                     requiredMessage="Debes ingresar la ganancia que obtendra"
+                                     converterMessage="El precio debe ser numerico">
+                        </h:inputText>
 
 
-<h:outputLabel for="cantidad" value="Cantidad"/>
-<h:inputText id="cantidad" value="#{productoBean.producto.cantidad}"
-required="true" styleClass="form-control"
-requiredMessage="Debes ingresar la cantidad"
-converterMessage="Debe ser dato entero">
-</h:inputText>
-
-<h:outputLabel for="descripcion" value="Descripcion:"/>
-<h:inputText id="descripcion" styleClass="form-control"
-value="#{productoBean.producto.descripcion}"
-required="true"
-requiredMessage="Debes ingresar una descripcion"/>
-<h:outputLabel for="categoria" value="Categoriade producto:"/>
-<b:selectOneMenu id="categori" value="#{productoBean.categoria.codCategoria}">
-    <f:selectItems value="#{productoBean.listaCate}" var="p" itemValue="#{p.codCategoria}" itemLabel="#{p.nombreCategoria}"/>
-               
-             </b:selectOneMenu>
+                        <h:outputLabel for="precioVenta" value="precio Venta:"/>
+                        <h:inputText id="precioVenta" value="#{productoBean.producto.precioVenta}"
+                                     required="true" styleClass="form-control"
+                                     requiredMessage="Debes ingresar el precio de venta"
+                                     converterMessage="El precio de venta debe ser numerico">
+                        </h:inputText>
 
 
-<h:commandButton value="Guardar" styleClass="btn btn-success"
-action="#{productoBean.guardarProducto()}" style="margin-right: 10px"/>
-<h:commandButton type="reset" value="Limpiar" styleClass="btn btn-danger"/>
-</h:form>
-</div>
-</div>
-<div class="row">
-<h:form >
-<h:dataTable styleClass="table" value="#{productoBean.listaProductos}" var="est" rendered="#{productoBean.listaProductos.size()>0}">
-<h:column>
-<f:facet name="header">
-<h:outputLabel value="Codigo"/>
-</f:facet>
-<h:outputText value="#{est.codProducto}"/>
-</h:column>
-<h:column>
-<f:facet name="header">
-<h:outputLabel value="Nombre"/>
-</f:facet>
-<h:outputText value="#{est.nombreProduct}"/>
-</h:column>
-<h:column>
-<f:facet name="header">
-<h:outputLabel value="Precio de comprar"/>
-</f:facet>
-<h:outputText value="#{est.precioCompra}"/>
-</h:column>
-<h:column>
-<f:facet name="header">
-<h:outputLabel value="Ganancias"/>
-</f:facet>
-<h:outputText value="#{est.ganancia}"/>
-</h:column>
-<h:column>
-<f:facet name="header">
-<h:outputLabel value="Precio de venta"/>
-</f:facet>
-    <h:outputText value="#{est.precioVenta}"/>
-</h:column>
-<h:column>
-<f:facet name="header">
-<h:outputLabel value="Cantidad"/>
-</f:facet>
-<h:outputText value="#{est.cantidad}"/>
-</h:column>
-    <h:column>
-<f:facet name="header">
-<h:outputLabel value="Descripciçón"/>
-</f:facet>
-<h:outputText value="#{est.descripcion}"/>
-</h:column>
-    <h:column>
-<f:facet name="header">
-<h:outputLabel value="Codigo de la Categoria"/>
-</f:facet>
-        <h:outputText value="#{est.codCategoria.nombreCategoria}"/>
-</h:column>
+                        <h:outputLabel for="cantidad" value="Cantidad"/>
+                        <h:inputText id="cantidad" value="#{productoBean.producto.cantidad}"
+                                     required="true" styleClass="form-control"
+                                     requiredMessage="Debes ingresar la cantidad"
+                                     converterMessage="Debe ser dato entero">
+                        </h:inputText>
 
-    <h:column>
-<f:facet name="header">
-<h:outputLabel value="Operaciones"/>
-</f:facet>
-        
-        <f:facet name="header">
-<h:outputLabel value="Operaciones"/>
-</f:facet>
-<h:commandButton value="Eliminar" styleClass="btn btn-danger"
-action="#{productoBean.eliminarProducto}"
-onclick="return confirmarEliminacion();">
-<f:param name="codigo" value="#{est.codProducto}"/>
-</h:commandButton>
+                        <h:outputLabel for="descripcion" value="Descripcion:"/>
+                        <h:inputText id="descripcion" styleClass="form-control"
+                                     value="#{productoBean.producto.descripcion}"
+                                     required="true"
+                                     requiredMessage="Debes ingresar una descripcion"/>
+                        <h:outputLabel for="categoria" value="Categoriade producto:"/>
+                        <b:selectOneMenu id="categori" value="#{productoBean.categoria.codCategoria}">
+                            <f:selectItems value="#{productoBean.listaCate}" var="p" itemValue="#{p.codCategoria}" itemLabel="#{p.nombreCategoria}"/>
 
- 
-<h:commandButton value="Modificar" styleClass="btn btn-primary"
-action="#{productoBean.returnProductoId}">
-<f:param name="codigoo" value="#{est.codProducto}"/>
-</h:commandButton>
-        
-    </h:column>
-</h:dataTable>
-</h:form>
-</div>
-</div>
-<h:outputScript>
-<c:if test = "#{not empty flash.exito}" >
-alertify.success('#{flash.exito}');
-</c:if>
-   function confirmarEliminacion(){
-return confirm("¿Está seguro que desea eliminar este producto");
-}
-    
-</h:outputScript>
-</h:body>
+                        </b:selectOneMenu>
+
+
+                        <h:commandButton value="Guardar" styleClass="btn btn-success"
+                                         action="#{productoBean.guardarProducto()}" style="margin-right: 10px"/>
+                        <h:commandButton type="reset" value="Limpiar" styleClass="btn btn-danger"/>
+                    </h:form>
+                </div>
+            </div>
+            <div class="row">
+                <h:form >
+                    <h:dataTable styleClass="table" value="#{productoBean.listaProductos}" var="est" rendered="#{productoBean.listaProductos.size()>0}">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Codigo"/>
+                            </f:facet>
+                            <h:outputText value="#{est.codProducto}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{est.nombreProduct}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Precio de comprar"/>
+                            </f:facet>
+                            <h:outputText value="#{est.precioCompra}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Ganancias"/>
+                            </f:facet>
+                            <h:outputText value="#{est.ganancia}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Precio de venta"/>
+                            </f:facet>
+                            <h:outputText value="#{est.precioVenta}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Cantidad"/>
+                            </f:facet>
+                            <h:outputText value="#{est.cantidad}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Descripciçón"/>
+                            </f:facet>
+                            <h:outputText value="#{est.descripcion}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Codigo de la Categoria"/>
+                            </f:facet>
+                            <h:outputText value="#{est.codCategoria.nombreCategoria}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Operaciones"/>
+                            </f:facet>
+
+                            <f:facet name="header">
+                                <h:outputLabel value="Operaciones"/>
+                            </f:facet>
+                            <h:commandButton value="Eliminar" styleClass="btn btn-danger"
+                                             action="#{productoBean.eliminarProducto}"
+                                             onclick="return confirmarEliminacion();">
+                                <f:param name="codigo" value="#{est.codProducto}"/>
+                            </h:commandButton>
+
+
+                            <h:commandButton value="Modificar" styleClass="btn btn-primary"
+                                             action="#{productoBean.returnProductoId}">
+                                <f:param name="codigoo" value="#{est.codProducto}"/>
+                            </h:commandButton>
+
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div>
+        <h:outputScript>
+            <c:if test = "#{not empty flash.exito}" >
+                alertify.success('#{flash.exito}');
+            </c:if>
+            function confirmarEliminacion(){
+            return confirm("¿Está seguro que desea eliminar este producto");
+            }
+
+        </h:outputScript>
+    </h:body>
 </html>

@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ProductoEntity.findAll", query = "SELECT p FROM ProductoEntity p")
-    ,@NamedQuery(name="ProductoEntity.OptenerNombre", query="SELECT COUNT(p) FROM ProductoEntity p WHERE p.nombreProduct = :nombreProduct") 
-    ,@NamedQuery(name="ProductoEntity.totalProduc", query="SELECT COUNT(p) FROM ProductoEntity p")
+    ,@NamedQuery(name = "ProductoEntity.OptenerNombre", query = "SELECT COUNT(p) FROM ProductoEntity p WHERE p.nombreProduct = :nombreProduct")
+    ,@NamedQuery(name = "ProductoEntity.totalProduc", query = "SELECT COUNT(p) FROM ProductoEntity p")
     , @NamedQuery(name = "ProductoEntity.findByCodProducto", query = "SELECT p FROM ProductoEntity p WHERE p.codProducto = :codProducto")
     , @NamedQuery(name = "ProductoEntity.findByNombreProduct", query = "SELECT p FROM ProductoEntity p WHERE p.nombreProduct = :nombreProduct")
     , @NamedQuery(name = "ProductoEntity.findByPrecioCompra", query = "SELECT p FROM ProductoEntity p WHERE p.precioCompra = :precioCompra")
@@ -198,5 +198,5 @@ public class ProductoEntity implements Serializable {
     public void setCodCategoria(int i) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
