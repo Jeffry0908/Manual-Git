@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="./WEB-INF/plantilla.xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+       <title>     *       *       ESTAS EN DO FILTER V1      *       *   </title>>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div>Dentro del filtro</div>
+        <h:panelGroup rendered="#{not empty usuario}">
+            <p>Bienvenido, #{usuario}</p>
+            <h:form>
+                <h:commandButton value="salir" action="#{usuarioBean.logout()}"/>
+            </h:form>
+            <b:navBar brand="Libreria Yavet" brandHref="#" fluid="true" inverse="true" id="menu" brandStyle="color:#fff; font-family: 'Lobster';font-size: 40px;font-weight: bold;">
+                    <b:navbarLinks>
+                      <b:navLink value="Cambio de pag" href="cambioPag.xhtml" class="hola" style="color: #fff;"></b:navLink>
+                    </b:navbarLinks>
+                </b:navBar>
+        </h:panelGroup>
+    </h:body>
+</html>

@@ -128,14 +128,14 @@ public class UsuarioBean {
 
     public String iniciar(String usuario, String contraseña) throws IOException {
         if (modelo.IniciarSesionD(usuario, contraseña) == 1) {
+            FacesContext context = FacesContext.getCurrentInstance();
             UsuarioEntity us = modelo.IniciarSesion(usuario, contraseña);
-            if (us.getEstado() == true) {
-               FacesContext context = FacesContext.getCurrentInstance();
+            if (us.getEstado() == true) {   
                context.getExternalContext().getSessionMap().put("usuario", us.getNombre());
                 switch (us.getCodTipoUsua().getCodTipoUsua()) {
                     case 1:
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("indexAdmin.xhtml");
-                        break;
+                        //Redireccion a las pag de secure
+                        return "faces/Secure/Dofilterv1.xhtml?faces-redirect=true";
                     case 2:
                         FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
                         break;
@@ -152,6 +152,6 @@ public class UsuarioBean {
     }
     public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "Producto?faces-redirect=true";
+        return "/faces/index?faces-redirect=true";
     }
 }
