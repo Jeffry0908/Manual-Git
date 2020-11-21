@@ -2,125 +2,50 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./WEB-INF/plantilla.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:b="http://bootsfaces.net/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        
-         <b:form>
-            <b:carousel id="tiovivo" style="width:100%" interval="2500">
-              <b:carouselItem >
-                <img src="../resources/img/promociones1.jpg" alt="Valladolid" style="width: 100%; height: 300px" />
-                <b:carouselCaption>
-                  <h2 style="color:#000000">¡Oferta De Productos!</h2>
-                  <p><a style="color:#000000" href="http://www.vanderkrogt.net/statues/object.php?webpage=CO&record;=escl010"></a></p>
-                </b:carouselCaption>
-              </b:carouselItem>
-              <b:carouselItem>
-                  <b:carouselCaption>
-                  <h3 style="color:#000000"></h3>
-                  <p><a style="color:#000000" href="http://www.vanderkrogt.net/statues/object.php?webpage=CO&record;=escl010"></a></p>
-                </b:carouselCaption>
-                  
-                <img src="../resources/img/ofertas1.jpg" alt="Valladolid" style="width: 100%; height: 300px" />
-              </b:carouselItem>
+         <div class="contenido">
+           
+            <article class="imagenes">
+                    
+                <c:forEach var="p" items="#{promocionesBean.listaPromocion}">
 
-        
-            </b:carousel>
-        </b:form>
-        
-        
-         <b:column col-sm="6" col-md="4">
-    <b:thumbnail>
-      <img src="../resources/img/promo1.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
-      <f:facet name="caption">
-        <h3>Papel China</h3>
-        <p>3 Pliegos de papel china a solo: $0.10</p>
-        <p>
-        <b:button look="primary" value="Comprar Producto"/>
-        </p>
-      </f:facet>
-      
-    </b:thumbnail>
-  </b:column>
-        
-        
-      <b:column col-sm="6" col-md="4">
-    <b:thumbnail>
-      <img src="../resources/img/promo2.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
-      <f:facet name="caption">
-        <h3>Plastilina</h3>
-        <p>2 Cajas de plastilina a solo: $0.50</p>
-        <p>
-        <b:button look="primary" value="Comprar Producto"/>
-        </p>
-      </f:facet>
-      
-    </b:thumbnail>
-  </b:column>
-        
-        
-        <b:column col-sm="6" col-md="4">
-    <b:thumbnail>
-      <img src="../resources/img/promo3.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
-      <f:facet name="caption">
-        <h3>Gelatina</h3>
-        <p>Bote de gelatina a solo: $0.50</p>
-        <p>
-        <b:button look="primary" value="Comprar Producto"/>
-        </p>
-      </f:facet>
-      
-    </b:thumbnail>
-  </b:column>
-        
-        
-        <b:column col-sm="6" col-md="4">
-    <b:thumbnail>
-      <img src="../resources/img/promo4.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
-      <f:facet name="caption">
-        <h3>Tempera</h3>
-        <p>Precio del producto a: $0.50</p>
-        <p>
-        <b:button look="primary" value="Comprar Producto"/>
-        </p>
-      </f:facet>
-      
-    </b:thumbnail>
-  </b:column>
-        
-        
-        <b:column col-sm="6" col-md="4">
-    <b:thumbnail>
-      <img src="../resources/img/promo5.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
-      <f:facet name="caption">
-        <h3>Bolsa De Globos</h3>
-        <p>Bolsa de globos : $0.25</p>
-        <p>
-        <b:button look="primary" value="Comprar Producto"/>
-        </p>
-      </f:facet>
-      
-    </b:thumbnail>
-  </b:column>
-        
-        
-        <b:column col-sm="6" col-md="4">
-    <b:thumbnail>
-      <img src="../resources/img/promo6.jpg" alt="Generic placeholder thumbnail" style="width: 780%" />
-      <f:facet name="caption">
-        <h3>Paquete De Lana</h3>
-        <p>Paquete a solo: $1.50</p>
-        <p>
-        <b:button look="primary" value="Comprar Producto"/>
-        </p>
-      </f:facet>
-      
-    </b:thumbnail>
-  </b:column>
-        
-        
+                <div class="img" >
+                    <b:form id="forma">
+                            <p:growl id="growl-success" showDetail="true" />
+                            <center><h2>#{p.codProducto.nombreProduct}</h2></center>
+                            <img src="data:image/png;base64,#{productoBean.displayImagen(p.codProducto.imagen)}" width="100" height="90"/>
+                            <br/>
+                            <br/>
+                            <p>Precio: $#{p.precioPromocion} <br/>#{p.fechaFinal}</p>
+                            <b:selectOneMenu id="d" value="#{ventasBean.promocion}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Debe seleccionar un producto" style="border: none" visible="xs,md">
+                                <f:selectItem itemValue="#{p}" itemLabel="#{p.codPromocion}" />
+                            </b:selectOneMenu>
+                            <b:selectOneMenu id="categoria" value="#{ventasBean.producto}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Debe seleccionar un producto" style="border: none" visible="xs,md">
+                                <f:selectItem itemValue="#{p.codProducto}" itemLabel="#{p.codProducto}" />
+                            </b:selectOneMenu>
+                        
+                            <center><p:outputLabel value="Elija la Cantidad:"></p:outputLabel></center>
+                            <b:touchSpin id="cantidad" col-md="20" value="#{ventasBean.cantidad}" min="1" max="#{p.codProducto.cantidad}" step="1" prefix="#" styleClass="form-control" required="true" requiredMessage="Debes ingresar la cantidad" converterMessage="Debe ser dato entero">
+                                <f:validateLongRange minimum="1"></f:validateLongRange>
+                            </b:touchSpin>
+                               
+                            <center><p:commandButton update="@form"  value="Agregar al carrito" actionListener="#{ventasBean.agregarPromo()}" styleClass="btn btn-success"></p:commandButton></center>
+
+                        </b:form>
+                    </div> 
+            </c:forEach>
+
+            </article>
+        <div>
+
+        </div>
+     </div>
         
     </ui:define>
 
