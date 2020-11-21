@@ -1,191 +1,207 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:c="http://java.sun.com/jsp/jstl/core"
+xmlns:b="http://bootsfaces.net/ui"
+xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Productos</title>
         <h:outputStylesheet name="css/bootstrap.min.css" />
         <h:outputStylesheet name="css/alertify.core.css" />
         <h:outputStylesheet name="css/alertify.default.css" />
         <h:outputScript name="js/alertify.js"/>
-        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="css/default.css"/>
+        
     </h:head>
     <h:body>
         <div id="top">
-            <b:navBar brand="Libreria Yavet" brandHref="#" fluid="true" inverse="true" id="menu" brandStyle="color:#fff; font-family: 'Lobster';font-size: 40px;font-weight: bold;">
-                <b:navbarLinks>
-                    <b:navLink value="Inicio" href="indexAdmin.xhtml"  class="hola" style="color: #fff;"></b:navLink>
-                    <b:navLink value="Producto" href="Productos.xhtml" class="hola" style="color: #fff;"></b:navLink>
-                    <b:navLink value="Categoria" href="categoria.xhtml" class="hola" style="color: #fff;"></b:navLink>
-                    <b:navLink value="Compra" href="Compras.xhtml" class="hola" style="color: #fff;"></b:navLink>
-                    <b:navLink value="Promociones" href="promocion.xhtml" class="hola" style="color: #fff;"></b:navLink>
-                    <b:navLink value="Cerrar Session" href="index.xhtml" class="hola" style="color: #fff;"></b:navLink>
-                </b:navbarLinks>
-            </b:navBar>
-        </div>        
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Productos</h2>
-                    <h:form id="miFormulario">
-                        <h:panelGroup layout="block" styleClass="alert alert-danger"
-                                      rendered="#{not empty facesContext.messageList}">
-                            <h:messages />
+            <header class="header2">
+              <div class="centrado">
+                    <div class="logo">
+                            <h1>Librería Yahveh</h1>
+                    </div>
+                    <nav>
+                        <a href="indexAdmin.xhtml">Inicio</a>
+                        <a href="Productos.xhtml">Productos</a>
+                        <a href="categoria.xhtml">Categoría</a>
+                        <a href="compra.xhtml">Compra</a>
+                        <a href="promocion.xhtml">Promociones</a>
+                        <a href="VentasRealizadas.xhtml">Ventas</a>
+                        <a href="Usuarios.xhtml">Usuarios</a>
+                    </nav>
+              </div>
+            </header> 
+        </div>
+        <br/>
+        <div class="contenido">
+            <h:form>
+            <h:commandButton value="Reporte de Productos" styleClass="btn btn-primary" 
+                             action="#{productoBean.verD()}"/>
+            </h:form>
+            <center><div class="formu">
+                    
+                <center><h2>Productos</h2></center>
+                <br/>
+                    <h:form enctype="multipart/form-data" class="form">
+                        <h:panelGroup layout="block"  rendered="#{not empty facesContext.messageList}">
+                            <b:messages />
                         </h:panelGroup>
-
-                        <h:outputLabel for="codProducto" value="Codigo de Producto"/>
+                        <h:outputLabel for="codProducto" value="Código de Producto"/>
                         <h:inputText id="codProducto" styleClass="form-control"
                                      value="#{productoBean.producto.codProducto}" readonly="true">
                         </h:inputText>
                         <h:inputHidden value="#{productoBean.producto.codProducto}">
                         </h:inputHidden>
+
                         <h:outputLabel for="nombre" value="Nombre Producto:"/>
-                        <h:inputText id="nombre" styleClass="form-control"
-                                     value="#{productoBean.producto.nombreProduct}"
-                                     required="true"
-                                     requiredMessage="Debes ingresar el nombre">
-                            <f:ajax event="blur" listener="#{productoBean.obtenerNombre(productoBean.producto.nombreProduct)}" render="@form" />
+                        <h:inputText id="nombre" styleClass="form-control" value="#{productoBean.producto.nombreProduct}" required="true" requiredMessage="Debes ingresar el nombre">
                         </h:inputText>
 
-
-                        <h:outputLabel for="precioCompra" value="precio Compra:"/>
-                        <h:inputText id="precioCompra" value="#{productoBean.producto.precioCompra}"
-                                     required="true" styleClass="form-control"
-                                     requiredMessage="Debe ingresar el precio de comprar"
-                                     converterMessage="El precio debe ser numerico">
-
+                        <h:outputLabel for="precioCompra" value="Precio Compra:"/>
+                        <h:inputText id="precioCompra" value="#{productoBean.producto.precioCompra}" required="true" styleClass="form-control" requiredMessage="Debe ingresar el precio de comprar" converterMessage="El precio debe ser numerico">
                         </h:inputText>
 
                         <h:outputLabel for="ganancia" value="Ganancia"/>
-                        <h:inputText id="ganancia" value="#{productoBean.producto.ganancia}"
-                                     required="true" styleClass="form-control"
-                                     requiredMessage="Debes ingresar la ganancia que obtendra"
-                                     converterMessage="El precio debe ser numerico">
-                        </h:inputText>
-
-
-                        <h:outputLabel for="precioVenta" value="precio Venta:"/>
-                        <h:inputText id="precioVenta" value="#{productoBean.producto.precioVenta}"
-                                     required="true" styleClass="form-control"
-                                     requiredMessage="Debes ingresar el precio de venta"
-                                     converterMessage="El precio de venta debe ser numerico">
-                        </h:inputText>
-
+                        <p:inputText id="decimal" value="#{productoBean.producto.ganancia}" styleClass="form-control"/>
+                        <p:slider for="decimal" minValue="0.2" maxValue="10" step="0.1" />
 
                         <h:outputLabel for="cantidad" value="Cantidad"/>
-                        <h:inputText id="cantidad" value="#{productoBean.producto.cantidad}"
-                                     required="true" styleClass="form-control"
-                                     requiredMessage="Debes ingresar la cantidad"
-                                     converterMessage="Debe ser dato entero">
-                        </h:inputText>
+                        <b:touchSpin id="cantidad" col-md="20" value="#{productoBean.producto.cantidad}" min="1" step="1" prefix="#" styleClass="form-control" required="true" requiredMessage="Debes ingresar la cantidad" converterMessage="Debe ser dato entero">
+                            <f:validateLongRange minimum="1"></f:validateLongRange>
+                        </b:touchSpin>
+                        
+                        <h:messages for="cantidad" ></h:messages>
+                        <h:outputLabel for="descripcion" value="Descripción:"/>
+                        <b:inputTextarea id="descripcion" rows="2" value="#{productoBean.producto.descripcion}" required="true" requiredMessage="Debes ingresar una descripcion"/>
 
-                        <h:outputLabel for="descripcion" value="Descripcion:"/>
-                        <h:inputText id="descripcion" styleClass="form-control"
-                                     value="#{productoBean.producto.descripcion}"
-                                     required="true"
-                                     requiredMessage="Debes ingresar una descripcion"/>
-                        <h:outputLabel for="categoria" value="Categoriade producto:"/>
-                        <b:selectOneMenu id="categori" value="#{productoBean.categoria.codCategoria}">
-                            <f:selectItems value="#{productoBean.listaCate}" var="p" itemValue="#{p.codCategoria}" itemLabel="#{p.nombreCategoria}"/>
-
-                        </b:selectOneMenu>
-
-
+                        <h:outputLabel for="codCategoria" value="Categoría de producto:"/>
+                        <b:selectOneMenu id="codCategoria" value="#{productoBean.categoria.codCategoria}" styleClass="form-control">
+                            <f:selectItems value="#{productoBean.listaCate}"
+                        var="l" itemLabel="#{l.nombreCategoria}" itemValue="#{l.codCategoria}"
+                        />
+                        </b:selectOneMenu>                       
+                        
+                        <p:growl  id="growl" ></p:growl>
+                        <p:fileUpload value="#{productoBean.file}" mode="simple" styleClass="btn btn-info" required="true" requiredMessage="Debe de elegir una imagen"></p:fileUpload>                       
+                        <br/>
                         <h:commandButton value="Guardar" styleClass="btn btn-success"
-                                         action="#{productoBean.guardarProducto()}" style="margin-right: 10px"/>
+                        action="#{productoBean.guardarProducto()}" style="margin-right: 10px"/>
                         <h:commandButton type="reset" value="Limpiar" styleClass="btn btn-danger"/>
                     </h:form>
-                </div>
-            </div>
-            <div class="row">
-                <h:form >
-                    <h:dataTable styleClass="table" value="#{productoBean.listaProductos}" var="est" rendered="#{productoBean.listaProductos.size()>0}">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputLabel value="Codigo"/>
-                            </f:facet>
-                            <h:outputText value="#{est.codProducto}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputLabel value="Nombre"/>
-                            </f:facet>
-                            <h:outputText value="#{est.nombreProduct}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputLabel value="Precio de comprar"/>
-                            </f:facet>
-                            <h:outputText value="#{est.precioCompra}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputLabel value="Ganancias"/>
-                            </f:facet>
-                            <h:outputText value="#{est.ganancia}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputLabel value="Precio de venta"/>
-                            </f:facet>
-                            <h:outputText value="#{est.precioVenta}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputLabel value="Cantidad"/>
-                            </f:facet>
-                            <h:outputText value="#{est.cantidad}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputLabel value="Descripciçón"/>
-                            </f:facet>
-                            <h:outputText value="#{est.descripcion}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputLabel value="Codigo de la Categoria"/>
-                            </f:facet>
-                            <h:outputText value="#{est.codCategoria.nombreCategoria}"/>
-                        </h:column>
+                </div></center>
+            <br/>
 
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputLabel value="Operaciones"/>
-                            </f:facet>
-
-                            <f:facet name="header">
-                                <h:outputLabel value="Operaciones"/>
-                            </f:facet>
+                <h:form>
+                    <b:dataTable styleClass="table" value="#{productoBean.listaProductos}" var="est" rendered="#{productoBean.listaProductos.size()>0}" pageLengthMenu="5,10,20" page-length="5">
+                    <b:dataTableColumn value="#{est.codProducto}" label="Código"/>
+                    <b:dataTableColumn value="#{est.nombreProduct}" label="Nombre" />
+                    <b:dataTableColumn value="#{est.precioCompra}" label="Precio Compra"/>
+                    <b:dataTableColumn value="#{est.ganancia}"  label="Ganancia"/>
+                    <b:dataTableColumn value="#{est.precioCompra+est.ganancia}" label="Precio de Venta"/>
+                    <b:dataTableColumn value="#{est.cantidad}" label="Cantidad" />
+                    <b:dataTableColumn value="#{est.descripcion}" label="Descripción" />
+                    <b:dataTableColumn value="#{est.codCategoria.nombreCategoria}" label="Categoría"/>
+                    <b:dataTableColumn label="Imagen" >
+                        <img src="data:image/png;base64,#{productoBean.displayImagen(est.imagen)}" width="100" height="90"/>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn label="Operaciones" >
                             <h:commandButton value="Eliminar" styleClass="btn btn-danger"
                                              action="#{productoBean.eliminarProducto}"
                                              onclick="return confirmarEliminacion();">
                                 <f:param name="codigo" value="#{est.codProducto}"/>
                             </h:commandButton>
-
-
-                            <h:commandButton value="Modificar" styleClass="btn btn-primary"
-                                             action="#{productoBean.returnProductoId}">
-                                <f:param name="codigoo" value="#{est.codProducto}"/>
-                            </h:commandButton>
-
-                        </h:column>
-                    </h:dataTable>
+                        <br/>
+                        <br/>
+                        <p:commandButton style="font-weight: bold;" value="Modificar" styleClass="btn btn-warning" action="#{productoBean.returnProductoId(est.codProducto)}" oncomplete="PF('wdatos').show();" update=":datos">
+                        </p:commandButton>       
+                        <p:commandButton style="font-weight: bold;" value="Modificar Imagen" styleClass="btn btn-info" action="#{productoBean.returnProductoId(est.codProducto)}" oncomplete="PF('wdatosimg').show();" update=":datos2">
+                        </p:commandButton>                   
+                    </b:dataTableColumn>
+                  </b:dataTable>
                 </h:form>
-            </div>
-        </div>
-        <h:outputScript>
-            <c:if test = "#{not empty flash.exito}" >
-                alertify.success('#{flash.exito}');
-            </c:if>
-            function confirmarEliminacion(){
-            return confirm("¿Está seguro que desea eliminar este producto");
-            }
+            <p:dialog header="Modificar" widgetVar="wdatos" id="datos" showEffect="explode" position="center top" style="width: 45%;height: auto;margin-top: 100px;margin-right: 500px;">
+                <h:form>
+                        <h:outputLabel for="codProducto" value="Código de Producto"/>
+                        <h:inputText id="codProducto" styleClass="form-control"
+                                     value="#{productoBean.producto.codProducto}" readonly="true">
+                        </h:inputText>
+                        <h:inputHidden value="#{productoBean.producto.codProducto}">
+                        </h:inputHidden>
 
-        </h:outputScript>
-    </h:body>
+                        <h:outputLabel for="nombre" value="Nombre Producto:"/>
+                        <h:inputText id="nombre" styleClass="form-control" value="#{productoBean.producto.nombreProduct}" required="true" requiredMessage="Debes ingresar el nombre">
+                        </h:inputText>
+
+                        <h:outputLabel for="precioCompra" value="Precio Compra:"/>
+                        <h:inputText id="precioCompra" value="#{productoBean.producto.precioCompra}" required="true" styleClass="form-control" requiredMessage="Debe ingresar el precio de comprar" converterMessage="El precio debe ser numerico">
+                        </h:inputText>
+
+                        <h:outputLabel for="ganancia" value="Ganancia"/>
+                        <p:inputText id="decimal" value="#{productoBean.producto.ganancia}" styleClass="form-control"/>
+                        <p:slider for="decimal" minValue="0.2" maxValue="10" step="0.1" />
+
+                        <h:outputLabel for="cantidad" value="Cantidad"/>
+                        <b:touchSpin id="cantidad" col-md="20" value="#{productoBean.producto.cantidad}" min="1" step="1" prefix="#" styleClass="form-control" required="true" requiredMessage="Debes ingresar la cantidad" converterMessage="Debe ser dato entero">
+                            <f:validateLongRange minimum="1"></f:validateLongRange>
+                        </b:touchSpin>
+                        
+                        <h:messages for="cantidad" ></h:messages>
+                        <h:outputLabel for="descripcion" value="Descripción:"/>
+                        <b:inputTextarea id="descripcion" rows="2" value="#{productoBean.producto.descripcion}" required="true" requiredMessage="Debes ingresar una descripcion"/>
+
+                        <h:outputLabel for="codCategoria" value="Categoría de producto:"/>
+                        <b:selectOneMenu id="codCategoria" value="#{productoBean.producto.codCategoria}" converter="omnifaces.SelectItemsConverter" styleClass="form-control">
+                            <f:selectItems value="#{productoBean.listaCate}"
+                        var="l" itemLabel="#{l.nombreCategoria}" itemValue="#{l}"
+                        />
+                        </b:selectOneMenu>
+                        
+                        <center><b:commandButton look="success" value="Guardar" action="#{productoBean.modificarProducto(productoBean.producto.codProducto)}"></b:commandButton> </center>
+               </h:form> 
+            </p:dialog> 
+            <p:dialog header="Modificar imagen" widgetVar="wdatosimg" id="datos2" showEffect="explode" position="center top" style="width: 45%;height: auto;margin-top: 100px;margin-right: 500px;">
+                <h:form enctype="multipart/form-data">       
+                <h:outputLabel for="codProducto" value="Código de Producto"/>
+                        <h:inputText id="codProducto" styleClass="form-control"
+                                     value="#{productoBean.producto.codProducto}" readonly="true">
+                        </h:inputText>
+                        <h:inputHidden value="#{productoBean.producto.codProducto}">
+                        </h:inputHidden>        
+                        <br/>
+                        <h:outputLabel value="Elegir Imagen:"/>
+                <p:fileUpload value="#{productoBean.file}" mode="simple" styleClass="btn btn-info" required="true" requiredMessage="Debe de elegir una imagen"></p:fileUpload>     
+                        <br/>
+                        <center><h:commandButton value="Guardar" styleClass="btn btn-success"
+                                               action="#{productoBean.modificarImagen(productoBean.producto.codProducto)}" style="margin-right: 10px"/>    </center>                    
+            </h:form> 
+            </p:dialog>
+        </div>
+        <h:panelGroup rendered="#{not empty usuario}" style="position: absolute;top: 12%;right: 5%;color: #000;font-size: 20px">
+            <p>Bienvenido/a, #{usuario}</p>
+            <h:form>
+                <center><h:commandButton value="Cerrar Sesión" action="#{usuarioBean.logout()}" class="btn btn-primary" style="font-size: 15px"/></center>
+            </h:form>
+        </h:panelGroup> 
+<h:outputScript>
+<c:if test = "#{not empty flash.exito}" >
+alertify.success('#{flash.exito}');
+</c:if>
+ function confirmarEliminacion(){
+     return confirm("¿Está seguro que desea eliminar este producto?");
+ }
+</h:outputScript>
+        <div>
+	<footer>
+		<h2>Librería Yahveh</h2>
+		<table id="footer">
+			<tr>
+				<td><a href="https://www.facebook.com/"><img src="../resources/img/facebook.png"/></a></td>
+				<td><a href="https://www.instagram.com/"><img src="../resources/img/instagram.png"/></a></td>
+			</tr>
+		</table>
+	</footer>   
+        </div>        
+</h:body>
 </html>
