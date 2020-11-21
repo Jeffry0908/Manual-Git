@@ -4,96 +4,146 @@
  * and open the template in the editor.
  */
 package libreria.bean;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean; 
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import libreria.entities.CompraEntity;
+import libreria.entities.DetallecompraEntity;
+import libreria.entities.ProductoEntity;
 import libreria.model.ComprasModel;
-import libreria.utils.JsfUtil;
+import libreria.model.ProductoModel;
+import libreria.utils.Codigo;
+import libreria.utils.Log;
+
+ 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class CompraBean {
+
+    private CompraEntity compra;
+    Codigo cod=new Codigo();
+    ComprasModel modelo = new ComprasModel();
+    ProductoModel modelP = new ProductoModel();
+    private DetallecompraEntity detalle= new DetallecompraEntity();
+    private ProductoEntity producto=new ProductoEntity();
+    private int cantidad;
+    private List<DetallecompraEntity>lista=new ArrayList();
+    private List<CompraEntity> listaCompra;
+   private List<DetallecompraEntity> listaDetalleC;
+   Log lo=new Log();
+    public CompraBean() {
+        compra=new CompraEntity();
+    }
     
-ComprasModel modelo = new ComprasModel();
+    public List<DetallecompraEntity> getLista() {
+        return lista;
+    }
 
-private CompraEntity compra;
-
-private List<CompraEntity> listacompras;
-
+    public void setLista(List<DetallecompraEntity> lista) {
+        this.lista = lista;
+    }
     
-
-
-public CompraBean() {
-compra = new CompraEntity();
-}
-
-
-public CompraEntity getCompra() {
-return compra;
-}
-public void setCompra(CompraEntity compra) {
-this.compra= compra;
-}
-
-public List<CompraEntity> getListaCompras() {
-
-return modelo.listarCompra();
-}
-
-
-public String actualizarCompra() {
-modelo.modificarCompra(compra);
-JsfUtil.exitoMensaje("La compra fue actualizada exitosamente");
-return "Compras?faces-redirect=true";
-
-}
-
-
-
-public String guardarCompra() {
-if (modelo.insertarCompra(compra) != 1) {
-
-JsfUtil.exitoMensaje("La compra ya existe");
-return "Compras?faces-redirect=true";
-} else {
     
-    modelo.insertarCompra(compra);
-JsfUtil.exitoMensaje("Compra registrado exitosamente");
+    public int getCantidad() {
+        return cantidad;
+    }
 
-return "Compras?faces-redirect=true";
-}
-}
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    
+    public ProductoEntity getProducto() {
+        return producto;
+    }
 
-public String eliminarCompra() {
-// Leyendo el parametro enviado desde la vista
-String codigo= JsfUtil.getRequest().getParameter("codigo");
-if (modelo.eliminarCompra(codigo) > 0) {
-JsfUtil.exitoMensaje( "Compra eliminada exitosamente");
-}
-else{
-JsfUtil.mensajeError( "No se pudo borrar la comprar");
-}
-return "Compras?faces-redirect=true";
-}
+    public void setProducto(ProductoEntity producto) {
+        this.producto = producto;
+    }
+    
+    
+    public DetallecompraEntity getDetalle() {
+        return detalle;
+    }
 
+    public void setDetalle(DetallecompraEntity detalle) {
+        this.detalle = detalle;
+    }
 
-public void returnCompraCodigo(){
-ComprasModel modeloo = new ComprasModel();
-String codigoo= JsfUtil.getRequest().getParameter("codigoo");
-CompraEntity compraa = modeloo.obtenerCompra(codigoo);
+    public CompraEntity getCompra() {
+        return compra;
+    }
 
-if(compraa != null){
-compra.setCodCompra(codigoo);
-compra.setFechaCompra(compraa.getFechaCompra());
-compra.setMonto(compraa.getMonto());
-}else{
-compra.setCodCompra("");
-compra.setMonto(0.0);
+    public void setCompra(CompraEntity compra) {
+        this.compra = compra;
+    }
 
+    public List<CompraEntity> getListaCompra() {
+        return listaCompra=modelo.listarCompra();
+    }
 
-}
-}
+    public void setListaCompra(List<CompraEntity> listaCompra) {
+        this.listaCompra = listaCompra;
+    }
 
+    public List<DetallecompraEntity> getListaDetalleC() {
+        return listaDetalleC;
+    }
 
+    public void setListaDetalleC(List<DetallecompraEntity> listaDetalleC) {
+        this.listaDetalleC = listaDetalleC;
+    }
+    
+    public void Agregar() throws IOException{
+        DetallecompraEntity det=new DetallecompraEntity();
+        det.setCantidad(cantidad);
+        det.setCodProducto(producto);
+        this.lista.add(det);
+        lo.escribirlog("Agregado a la lista de compras");
+        
+    } 
+    public String registrar(){
+        BigDecimal totalpr  = BigDecimal.ZERO;
+        BigDecimal monto  = BigDecimal.ZERO;
+        BigDecimal da  = BigDecimal.ZERO;
+        double mon=0;
+        double tota=0;
+        int cantidadFinal;
+        int total = modelo.total();
+        cod.generarcod(total, "COM");
+        String codig = cod.serie();
+        compra.setCodCompra(codig);
+        for(DetallecompraEntity dat:lista){
+            mon+=dat.getCodProducto().getPrecioCompra()*dat.getCantidad();  
+        }
+        compra.setMonto(mon);
+        modelo.insertarCompra(compra);
+        
+        for(DetallecompraEntity datos:lista){
+            datos.getCodProducto().getCodProducto();
+            datos.getCantidad();
+            ProductoEntity p= modelP.obtenerProducto(datos.getCodProducto().getCodProducto());
+            cantidadFinal=p.getCantidad()+datos.getCantidad();
+            p.setCantidad(cantidadFinal);
+            modelP.modificarProducto(p);
+            datos.setCodCompra(compra);
+            datos.getTotal();
+            tota=datos.getCodProducto().getPrecioCompra()*datos.getCantidad();
+            datos.setTotal(tota);
+            modelo.insertarDetalleCompra(datos);
+        }
+        lista.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Exito","Compra Ingresada") );    
+        return "compra";
+    }
+       public List<DetallecompraEntity>datosDetalleVenta(String cod){
+         listaDetalleC=modelo.listarporCod(cod);
+            return listaDetalleC;            
 
+    }
 }
