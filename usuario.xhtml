@@ -1,68 +1,97 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./WEB-INF/plantilla.xhtml"
+                template="./WEB-INF/plantillaLogin.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:b="http://bootsfaces.net/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
+
+        <center><h1 style="color: #fff; font-weight: bold; text-shadow: -3px -3px 1px #000;font-size: 45px">Crear Cuenta</h1></center>
+
+        <center><div class="formu">
         <b:form horizontal="true" id="insertarUsuario" class="form">
              <h:panelGroup layout="block" 
                           rendered="#{not empty facesContext.messageList}">
-                <h:messages />
+                <b:messages />
             </h:panelGroup>
             <b:panelGrid columns="1">
-                <h:outputLabel for="correo" value="correo"/>
-                <h:inputText id="mensaje" styleClass="form-control"
+                <h:outputLabel for="correo" value="Correo Electrónico:" style="color: #fff;font-size: 20px"/>
+                <b:inputText id="correo" styleClass="form-control"
                              value="#{usuarioBean.usuario.correoElectonico}"
                              required="true"
-                             requiredMessage="Debes ingresar el telefono"
-                             validatorMessage="Nombre Invalido">
-                    <f:ajax event="blur" listener="#{usuarioBean.obtenerNombre(usuariosBean.usuario.correoElectonico)}" render="@form" />
-                </h:inputText>     
-                <h:outputLabel for="contraseña" value="contraseña"/>
-                <b:inputSecret id="contraseña" styleClass="form-control"
+                             requiredMessage="Debes ingresar el correo Electrónico:"
+                             validatorMessage="Correo Electrónico Invalido" placeholder="Correo Electrónico:" style="border-radius: 0 30px 30px 0; width: 90%">
+                    <f:validateRegex pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$"/>
+                </b:inputText>  
+
+                <h:outputLabel for="contraseña" value="Contraseña" style="color: #fff;font-size: 20px"/>
+                <p:password  id="contraseña" styleClass="form-control"
                              value="#{usuarioBean.usuario.contraseña}"
                              required="true"
-                             requiredMessage="Debes ingresar el telefono"
-                             validatorMessage="Nombre Invalido">
-                </b:inputSecret>                 
-                <h:outputLabel for="nombre" value="Nombre:"/>
-                <h:inputText id="nombre" styleClass="form-control"
+                             requiredMessage="Debes ingresar el contraseña"
+                              placeholder="Contraseña" 
+                              style="border-radius: 0 30px 30px 0; width: 96%"
+                              validatorMessage="La contraseña debe de contener un mínimo de 8 caracteres Mayúscula Minúscula y Numero"
+                              feedback="true"
+                              promptLabel="Ingrese su contraseña" weakLabel="Debil"
+                              goodLabel="Nivel Medio" strongLabel="Fuerte">
+                    <f:validateRegex pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"/>
+                </p:password >
+                <br/>
+                
+                <h:outputLabel for="contraseña" value="Confirmar Contraseña" style="color: #fff;font-size: 20px"/>
+                <p:password  id="confirmar" styleClass="form-control"
+                             value="#{usuarioBean.contra2}"
+                             required="true"
+                             requiredMessage="Debes ingresar la contraseña"
+                             placeholder="Confirmar Contraseña" 
+                             style="border-radius: 0 30px 30px 0; width: 96%"
+                             feedback="true"
+                             promptLabel="Repita su contraseña" weakLabel="Debil"
+                             goodLabel="Nivel Medio" strongLabel="Fuerte">
+                </p:password >  
+                <br/>
+
+                <h:outputLabel for="nombre" value="Nombre:" style="color: #fff;font-size: 20px"/>
+                <b:inputText id="nombre" styleClass="form-control"
                              value="#{usuarioBean.usuario.nombre}"
                              required="true"
                              requiredMessage="Debes ingresar el nombre"
-                             validatorMessage="Nombre Invalido">
-                </h:inputText>                
-                <h:outputLabel for="apellido" value="Apellido:"/>
-                <h:inputText id="apellido" styleClass="form-control"
+                             validatorMessage="Nombre Invalido" placeholder="Ingrese su nombre" style="border-radius: 0 30px 30px 0; width: 90%">
+                </b:inputText>                
+                <h:outputLabel for="apellido" value="Apellido:" style="color: #fff;font-size: 20px"/>
+                <b:inputText id="apellido" styleClass="form-control"
                              value="#{usuarioBean.usuario.apellido}"
                              required="true"
-                             requiredMessage="Debes ingresar el apellido"
-                             validatorMessage="Nombre Invalido">
-                </h:inputText>   
-                <h:outputLabel for="telefono" value="Telefono"/>
-                <h:inputText id="telefono" styleClass="form-control"
+                             requiredMessage="Debes ingresar el Apellido:"
+                             validatorMessage="Apellido: Invalido" placeholder="Ingrese su apellido" style="border-radius: 0 30px 30px 0; width: 90%">
+                </b:inputText>   
+                <h:outputLabel for="telefono" value="Telefono" style="color: #fff;font-size: 20px"/>
+                <b:inputText id="telefono" styleClass="form-control"
                              value="#{usuarioBean.usuario.telefono}"
                              required="true"
-                             requiredMessage="Debes ingresar el telefono"
-                             validatorMessage="Nombre Invalido">
-                </h:inputText> 
-                <h:outputLabel for="direccion" value="direccion"/>
-                <h:inputText id="direccion" styleClass="form-control"
+                             requiredMessage="Debes ingresar el teléfono"
+                             validatorMessage="Teléfono Invalido debe tener formato 0000-0000" placeholder="Ingrese su Teléfono" style="border-radius: 0 30px 30px 0; width: 90%">
+                    <f:validateRegex pattern="[0-9]{4}-[0-9]{4}" />
+                </b:inputText> 
+                <h:outputLabel for="direccion" value="Dirección" style="color: #fff;font-size: 20px;border-color: #000; "/>
+                <b:inputText id="direccion" styleClass="form-control"
                              value="#{usuarioBean.usuario.direccion}"
                              required="true"
-                             requiredMessage="Debes ingresar el telefono"
-                             validatorMessage="Nombre Invalido">
-                </h:inputText> 
+                             requiredMessage="Debes ingresar su Dirección"
+                             validatorMessage="Dirección Invalida" placeholder="Ingrese su Dirección" style="border-radius: 0 30px 30px 0; width: 90%">
+                </b:inputText> 
                 
             </b:panelGrid>
-            <h:commandButton value="Guardar" styleClass="btn btn-success"
+            <h:commandButton value="Crear Cuenta" styleClass="btn btn-success"
                              action="#{usuarioBean.validarDatos()}" style="margin-right:
                              10px"/>  
 
         </b:form>
+        </div></center>
     </ui:define>
 
 </ui:composition>
