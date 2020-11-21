@@ -5,17 +5,20 @@
  */
 package libreria.bean;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import libreria.entities.ProductoEntity;
 import libreria.entities.PromocionesEntity;
 import libreria.model.ProductoModel;
 import libreria.model.PromocionModel;
 import libreria.utils.Codigo;
+import libreria.utils.JsfUtil;
+import libreria.utils.Log;
 
 /**
  *
@@ -31,6 +34,7 @@ public class PromocionesBean {
     private ProductoEntity producto;
     private List<PromocionesEntity> listaPromocion;
     private List<ProductoEntity> listaProduc;
+    Log lo=new Log();
     /**
      * Creates a new instance of PromocionesBean
      */
@@ -56,7 +60,7 @@ public class PromocionesBean {
     }
 
     public List<PromocionesEntity> getListaPromocion() {
-        return modelo.ListarPromociones();
+        return listaPromocion=modelo.ListarPromociones();
     }
 
     public void setListaPromocion(List<PromocionesEntity> listaPromocion) {
@@ -80,41 +84,51 @@ public class PromocionesBean {
     }
     
     
-    public String guardarPromocion(String codigo){ 
-             int total= modelo.total();
-            cod.generarcod(total, "PRO");
-            String codig= cod.serie();
-            promocion.setCodPromocion(codig);       
-            promocion.setCodProducto(producto);
-        if (modelo.dato(codigo)==1) {
-            if(modelo.modificarPromocion(promocion)!=1){
-
-                return null;
-            }else {
-                FacesContext.getCurrentInstance().addMessage("successMessage", new
-                FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado Exitosamente", "Agregado")); 
-                return "promocion?faces-redirect=true";
-            }
-        }else{
-            if(modelo.insertarPromocion(promocion)!=1){ 
-                FacesContext.getCurrentInstance().addMessage("errorMessage", new
-                FacesMessage(FacesMessage.SEVERITY_INFO, "Esta promocion ya existe", "Promocion"));
-                return null;
-            }else{
-                FacesContext.getCurrentInstance().addMessage("successMessage", new
-                FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado Exitosamente", "Agregado"));     
-                return "promocion?faces-redirect=true";
-            }
+     public String guardarPromocion(String codigo) throws IOException{
+         ProductoEntity prod=pro.obtenerProducto(producto.getCodProducto());
+        if(promocion.getFechaFinal().before(promocion.getFechaInicio())){
+          JsfUtil.mensajeError("Fecha de fin no puede ser menor a la de inicio");
+        }else if(promocion.getPrecioPromocion().compareTo(new BigDecimal (prod.getPrecioVenta()))==1){
+         JsfUtil.mensajeError("El precio de la promocion no puede ser mayor al de venta");
         }
+        else{ 
+        if(promocion.getCodPromocion() == null || promocion.getCodPromocion().isEmpty()){
+            int total = modelo.total();
+            cod.generarcod(total, "PRO");
+            String codig = cod.serie();
+            promocion.setCodPromocion(codig);
+        }else{
+            
+        }      
+            promocion.setCodProducto(producto);
+            if (modelo.insertarPromocion(promocion) != 1) {
+            return null;//Regreso a la misma página
+            } else {
+            //Forzando la redirección en el cliente
+            JsfUtil.setFlashMessage("exito","promocion registrada exitosamente");
+            lo.escribirlog("Se agrego la promocion");
+            return "promocion?faces-redirect=true";
+            }}
+        return null;
+    }
+     public String modificarPromocion(String codigo) throws IOException{ 
+           
+            if (modelo.modificarPromocion(promocion) != 1) {
+            return null;//Regreso a la misma página
+            } else {
+                 JsfUtil.setFlashMessage("exito","promocion modificada exitosamente");
+                 lo.escribirlog("Se modifico la promocion");
+            //Forzando la redirección en el cliente
+            return "promocion?faces-redirect=true";
+            }
     }
     public String eliminarPromocion(String codigo){
         if (modelo.eliminarPromocion(codigo) > 0) {
-                FacesContext.getCurrentInstance().addMessage("successMessage", new
-                FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminado Exitosamente", "Eliminado"));            
+            JsfUtil.setFlashMessage("exito","promocion eliminada exitosamente");           
         }else{
-            
+            JsfUtil.setErrorMessage(null, "No se pudo borrar a esta promocion");
         }
-         return "promocion?faces-redirect=true";
+         return "promocion";
     }
     public void obtenerdatos(String codigo){
         if (modelo.dato(codigo)==1) {
@@ -122,6 +136,7 @@ public class PromocionesBean {
             ProductoEntity tipo= new ProductoEntity();
             promocion.setCodPromocion(dato.getCodPromocion());
             promocion.setCodProducto(dato.getCodProducto());
+
             promocion.setFechaInicio(dato.getFechaInicio());
             promocion.setFechaFinal(dato.getFechaFinal());
             promocion.setPrecioPromocion(dato.getPrecioPromocion());
