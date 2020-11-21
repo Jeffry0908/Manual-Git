@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/plantilla.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <div class="contenido2">
+             <br></br>
+             <center><h2>Productos en Carrito</h2></center>
+             
+        <h:form id="form">
+            <c:if test="#{not empty usuario}">            
+            <h:commandLink value = "Ver Compras Realizadas" styleClass="btn btn-info"  action = "Comprascliente.xhtml" actionListener="#{ventasBean.ventaUsuario(cod)}"/>
+            </c:if>
+            <br/>
+            <br/>
+            <p:dataTable id="detalle" value="#{ventasBean.lista}" var="det" >
+                <p:column headerText="Nombre Producto">
+                    #{det.codProducto.nombreProduct}
+                </p:column>                        
+                <p:column headerText="precio">
+                    #{det.codProducto.precioVenta}
+                </p:column>
+                <p:column headerText="Cantidad">
+                    #{det.cantidad}
+                </p:column>
+                <p:column headerText="Total">
+                    #{det.codProducto.precioVenta*det.cantidad}
+                </p:column>                
+                <p:column headerText="Acción">
+                    <p:commandLink value="Eliminar" update=":form:detalle" process=":form:detalle" styleClass="btn btn-danger" style="color:#fff">
+                        <p:collector value="#{det}" removeFrom="#{ventasBean.lista}" unique="true"/>
+                    </p:commandLink>
+                </p:column>                        
+            </p:dataTable>
+        </h:form>
+            <center><h2>Productos en Promoción</h2></center>
+            <h:form id="form2"> 
+            <p:dataTable id="detalle2" value="#{ventasBean.lista2}" var="det" >
+                <p:column headerText="Nombre Producto">
+                    #{det.codProducto.nombreProduct}
+                </p:column>                        
+                <p:column headerText="precio">
+                    #{det.precio}
+                </p:column>
+                <p:column headerText="Cantidad">
+                    #{det.cantidad}
+                </p:column>
+                <p:column headerText="Total">
+                    #{det.precio*det.cantidad}
+                </p:column> 
+               
+                <p:column headerText="Acción">
+                    <p:commandLink value="Eliminar" update=":form2:detalle2" process=":form2:detalle2" styleClass="btn btn-danger" style="color:#fff">
+                        <p:collector value="#{det}" removeFrom="#{ventasBean.lista2}" unique="true"/>
+                    </p:commandLink>
+                </p:column>                        
+            </p:dataTable>            
+        </h:form>
+        <b:messages />
+        <c:if test="#{not empty usuario and ventasBean.lista.size()>0 or ventasBean.lista2.size()>0}">
+            <h:form>
+                <br></br>
+                <center><h:commandLink value="Comprar" actionListener="#{ventasBean.ver(cod)}" styleClass="btn btn-primary"></h:commandLink></center>
+            </h:form>
+        </c:if>
+        <c:if test="#{empty usuario}">
+            <br/>
+            <center><p:commandButton value="Iniciar Sesión" styleClass="btn btn-primary" action="#{categoriaBean.obtenerdatos(est.codCategoria)}" oncomplete="PF('wdatos').show();" update=":datos"></p:commandButton></center>
+        </c:if>
+        <c:if test="#{ventasBean.lista.size()==0 and ventasBean.lista2.size()==0 }">
+            <br/>
+            <b:alert severity="success">No ha Seleccionado ningun producto</b:alert>        
+        </c:if>
+        <br/>
+        <p:dialog header="Iniciar Sesión" widgetVar="wdatos" id="datos" showEffect="explode">
+               <b:form>
+                   
+                   <div class="field-group">
+                       <span class="fa fa-user" aria-hidden="true"></span>
+                       <div class="wthree-field">
+                           <b:inputText placeholder="Usuario" required="true" value="#{usuarioBean.usuario.correoElectonico}">
+                           </b:inputText>
+                       </div>
+                   </div>
+                   <div class="field-group">
+                       <span class="fa fa-lock" aria-hidden="true"></span>
+                       <div class="wthree-field">
+                           <b:inputSecret placeholder="Contraseña" required="true" value="#{usuarioBean.usuario.contraseña}"></b:inputSecret>  
+                       </div>
+                   </div>
+                   <div class="wthree-field">
+                       <center><h:commandButton styleClass="btn btn-info"  value="Iniciar Sesion" action="#{usuarioBean.iniciar(usuarioBean.usuario.correoElectonico, usuarioBean.usuario.contraseña)}"/></center>                       
+                   </div>
+                   <p:separator />
+                   
+                   <a href="usuario.xhtml"><b:alert severity="info"><strong>¿No tienes cuenta? Click Aqui</strong>
+                   </b:alert></a>
+               </b:form>            
+        </p:dialog>        
+        
+        <h:panelGroup rendered="#{not empty usuario}" style="position: absolute;top: 12%;right: 5%;color: #000;font-size: 20px">
+            <p>Bienvenido/a, #{usuario}</p>
+            <h:form>
+                <center><h:commandButton value="Cerrar Sesión" action="#{usuarioBean.logout()}" class="btn btn-primary" style="font-size: 15px"/></center>
+            </h:form>
+        </h:panelGroup>
+        </div> 
+    </ui:define>
+
+</ui:composition>
