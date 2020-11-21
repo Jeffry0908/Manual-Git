@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="WEB-INF/plantilla.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:define name="content">
+        <br/>
+        <br/>
+        <center><h1>Compras Realizadas</h1></center>
+        <div class="contenido">
+        <h:form id="form">         
+            
+            <b:dataTable id="detalle" value="#{ventasBean.listaVentaUsuario}" var="da" >
+                <b:dataTableColumn value="#{da.codVenta}" label="Código Compra"/>
+                <b:dataTableColumn value="#{da.codUsuario.nombre}" label="Cliente"/>
+                <b:dataTableColumn value="#{da.fechaVenta}" label="Fecha Compra"/>
+                <b:dataTableColumn value="#{da.monto}" label="Total a Pagar"/>
+                <b:dataTableColumn value="#{da.estado}" label="Estado de Compra"/>
+                <b:dataTableColumn label="Mas Detalles">
+                    <h:commandButton value="Ver Detalles" styleClass="btn btn-primary" 
+                                     action="#{ventasBean.verD(da.codUsuario.codUsuario, da.codVenta)}"/>                    
+                </b:dataTableColumn>
+            </b:dataTable>
+        </h:form>
+        </div>
+        <h:panelGroup rendered="#{not empty usuario}" style="position: absolute;top: 12%;right: 5%;color: #000;font-size: 20px">
+            <p>Bienvenido, #{usuario}</p>
+            <h:form>
+                <center><h:commandButton value="Cerrar Sesión" action="#{usuarioBean.logout()}" class="btn btn-primary" style="font-size: 15px"/></center>
+            </h:form>
+        </h:panelGroup>        
+    </ui:define>
+
+</ui:composition>
